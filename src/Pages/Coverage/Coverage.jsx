@@ -123,7 +123,7 @@ const Coverage = () => {
           zoom={8}
           scrollWheelZoom={false}
           ref={mapRef}
-          className="w-full h-[420px] sm:h-[550px] md:h-[700px] lg:h-[820px] z-0"
+          className="w-full h-105 sm:h-137.5 md:h-175 lg:h-205 z-0"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -137,7 +137,7 @@ const Coverage = () => {
               icon={defaultIcon}
             >
               <Popup>
-                <div className="min-w-[180px] py-1">
+                <div className="min-w-45 py-1">
                   <div className="flex items-center gap-1.5 mb-1.5">
                     <FiMapPin className="text-[#0D3B3D] shrink-0" />
                     <strong className="text-sm text-slate-800">
