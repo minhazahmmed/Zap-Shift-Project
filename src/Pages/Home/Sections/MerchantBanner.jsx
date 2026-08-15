@@ -1,12 +1,18 @@
 import { Link } from "react-router";
 import { FaBox, FaLocationDot } from "react-icons/fa6";
+import BeAMerchantBg from "../../../assets/be-a-merchant-bg.png";
 
 const MerchantBanner = () => {
   return (
     <section className="w-full my-8 md:my-12">
       <div className="relative overflow-hidden bg-[#0D3B3D] rounded-2xl md:rounded-3xl px-6 sm:px-10 md:px-16 py-10 md:py-14 flex flex-col md:flex-row items-center justify-between gap-8">
-        {/* decorative glow */}
-        <div className="absolute -top-24 left-1/4 w-72 h-72 bg-[#CAEB66]/20 rounded-full blur-3xl pointer-events-none" />
+        {/* top wave background image */}
+        <img
+          src={BeAMerchantBg}
+          alt=""
+          aria-hidden="true"
+          className="absolute top-0 left-0 w-full h-auto object-cover object-top pointer-events-none select-none"
+        />
 
         <div className="relative z-10 text-center md:text-left max-w-xl w-full">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 leading-snug">
