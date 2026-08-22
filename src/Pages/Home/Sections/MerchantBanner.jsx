@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { FaBox, FaLocationDot } from "react-icons/fa6";
 import BeAMerchantBg from "../../../assets/be-a-merchant-bg.png";
+import LocationMerchant from "../../../assets/location-merchant.png";
 
 const MerchantBanner = () => {
   return (
@@ -40,9 +40,12 @@ const MerchantBanner = () => {
           </div>
         </div>
 
-        <div className="relative z-10 shrink-0 w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 flex items-center justify-center">
-          <FaLocationDot className="absolute -top-2 right-8 text-[#CAEB66] text-3xl sm:text-4xl animate-bounce" />
-          <FaBox className="text-slate-500/40 text-[9rem] sm:text-[11rem] md:text-[13rem]" />
+        <div className="relative z-10 shrink-0 w-40 sm:w-52 md:w-64 lg:w-72">
+          <img
+            src={LocationMerchant}
+            alt="Parcel delivery location illustration"
+            className="w-full h-auto object-contain"
+          />
         </div>
       </div>
     </section>

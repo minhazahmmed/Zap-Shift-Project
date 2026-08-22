@@ -1,27 +1,34 @@
+
 import { NavLink } from "react-router";
 import Logo from "../../../Components/Logo/Logo";
+import useAuth from "../../../hooks/useAuth";
+import { useState } from "react";
 
 const Header = () => {
+  const { user, logOut, loading } = useAuth(); 
+  const [isLoggingOut, setIsLoggingOut] = useState(false); 
+  const handleLogout = () => {
+    setIsLoggingOut(true);
+    logOut()
+      .then(() => {
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoggingOut(false);
+      });
+  };
+
   const links = (
     <>
-      <li>
-        <NavLink to="/services">Services</NavLink>
-      </li>
-      <li>
-        <NavLink to="/coverage">Coverage</NavLink>
-      </li>
-      <li>
-        <NavLink to="/about-us">About Us</NavLink>
-      </li>
-      <li>
-        <NavLink to="/pricing">Pricing</NavLink>
-      </li>
-      <li>
-        <NavLink to="/blog">Blog</NavLink>
-      </li>
-      <li>
-        <NavLink to="/contact">Contact</NavLink>
-      </li>
+      <li><NavLink to="/services">Services</NavLink></li>
+      <li><NavLink to="/coverage">Coverage</NavLink></li>
+      <li><NavLink to="/about-us">About Us</NavLink></li>
+      <li><NavLink to="/pricing">Pricing</NavLink></li>
+      <li><NavLink to="/blog">Blog</NavLink></li>
+      <li><NavLink to="/contact">Contact</NavLink></li>
     </>
   );
 
@@ -37,12 +44,7 @@ const Header = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </div>
           <ul
@@ -64,9 +66,38 @@ const Header = () => {
       </div>
 
       <div className="navbar-end">
-        <NavLink to="/login" className="btn btn-sm md:btn-md btn-neutral rounded-lg px-4 md:px-6">
-          Sign In
-        </NavLink>
+       
+        {loading ? (
+          <span className="loading loading-spinner loading-md"></span>
+        ) : user ? (
+  
+          <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="btn btn-sm md:btn-md btn-neutral rounded-lg px-4 md:px-6"
+          >
+            {isLoggingOut ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              "Log out"
+            )}
+          </button>
+        ) : (
+        
+          <NavLink
+            to="/login"
+            className="btn btn-primary text-black btn-sm md:btn-md btn-neutral rounded-lg px-4 md:px-6"
+          >
+            Log in
+          </NavLink>
+        )}
+
+            <NavLink
+            to="/beARider"
+            className="mx-2 btn btn-primary text-black btn-sm md:btn-md btn-neutral rounded-lg px-4 md:px-6"
+          >
+            Be a rider
+          </NavLink>
       </div>
     </div>
   );
