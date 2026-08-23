@@ -1,28 +1,33 @@
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 
-const SocialLogin = () => {
+const SocialLogin = ({ from: propsFrom }) => {
+  const { signInGoogle } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  // Props থেকে পাওয়া পাথ অথবা লোকাল লোকেশন স্টেট থেকে পাথ বের করা
+  const redirectPath = propsFrom || location.state?.from?.pathname || "/";
 
-    const {signInGoogle} = useAuth();
-    const navigate = useNavigate();
+  const handleGoogleSignIn = () => {
+    signInGoogle()
+      .then((result) => {
+        console.log(result.user);
+        navigate(redirectPath, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-    const handleGoogleSignIn = ()=>{
-signInGoogle()
-    .then(result => {
-      console.log(result.user);
-       navigate('/');
-    })
-    .catch(error=>{
-      console.log(error);
-      
-    })
-  }
   return (
     <div className="text-center">
-        
       <p className="py-1 font-bold text-gray-700">Or</p>
-      <button onClick={handleGoogleSignIn} type="button" className="btn w-full bg-white text-black border-[#e5e5e5]">
+      <button
+        onClick={handleGoogleSignIn}
+        type="button"
+        className="btn w-full bg-white text-black border-[#e5e5e5]"
+      >
         <svg
           aria-label="Google logo"
           width="16"

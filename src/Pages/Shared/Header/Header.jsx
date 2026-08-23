@@ -25,6 +25,7 @@ const Header = () => {
     <>
       <li><NavLink to="/services">Services</NavLink></li>
       <li><NavLink to="/coverage">Coverage</NavLink></li>
+      <li><NavLink to="/send-parcel">Send Parcel</NavLink></li>
       <li><NavLink to="/about-us">About Us</NavLink></li>
       <li><NavLink to="/pricing">Pricing</NavLink></li>
       <li><NavLink to="/blog">Blog</NavLink></li>
@@ -93,7 +94,7 @@ const Header = () => {
         )}
 
             <NavLink
-            to="/beARider"
+            to="/rider"
             className="mx-2 btn btn-primary text-black btn-sm md:btn-md btn-neutral rounded-lg px-4 md:px-6"
           >
             Be a rider
