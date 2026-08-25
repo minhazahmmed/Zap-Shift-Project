@@ -1,6 +1,8 @@
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 const SendParcel = () => {
   const serviceCenters = useLoaderData(); // serviceCenters.json data from route loader
@@ -12,6 +14,10 @@ const SendParcel = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const {user} = useAuth();
+
+  const axiosSecure = useAxiosSecure();
 
   // Unique regions using Set
   const regions = [...new Set(serviceCenters.map((sc) => sc.region))];
@@ -66,6 +72,13 @@ const SendParcel = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
+          //save the parcel info to the database
+          axiosSecure.post('/parcels', data)
+          .then(res=>{
+            console.log(res.data)
+          })
+
+
         Swal.fire({
           title: "Booking Confirmed!",
           html: `Your parcel has been booked successfully.<br/><b>Total Cost: ৳${cost}</b>`,
@@ -171,6 +184,7 @@ const SendParcel = () => {
                 {...register("senderName", {
                   required: "Sender name is required",
                 })}
+                defaultValue={user?.displayName}
                 className="input w-full"
                 placeholder="Sender Name"
               />
@@ -190,6 +204,7 @@ const SendParcel = () => {
                     message: "Enter a valid email",
                   },
                 })}
+                 defaultValue={user?.email}
                 className="input w-full"
                 placeholder="Sender Email"
               />
