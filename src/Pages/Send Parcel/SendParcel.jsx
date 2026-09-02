@@ -53,6 +53,9 @@ const SendParcel = () => {
       cost = minCharge + extraCharge;
     }
 
+    console.log('cost', cost);
+    data.cost = cost;
+
     Swal.fire({
       title: "Confirm Your Booking",
       html: `
