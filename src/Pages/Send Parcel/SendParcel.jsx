@@ -1,5 +1,5 @@
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
@@ -18,6 +18,7 @@ const SendParcel = () => {
   const {user} = useAuth();
 
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   // Unique regions using Set
   const regions = [...new Set(serviceCenters.map((sc) => sc.region))];
@@ -88,6 +89,7 @@ const SendParcel = () => {
           icon: "success",
           confirmButtonColor: "#16a34a",
         });
+        navigate('/dashboard/my-parcels')
         reset();
       }
     });
@@ -125,7 +127,7 @@ const SendParcel = () => {
                 {...register("parcelType", { required: true })}
                 className="radio radio-success"
               />
-              Not-Document
+              Non-Document
             </label>
           </div>
           {errors.parcelType && (

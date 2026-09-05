@@ -4,11 +4,12 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import Swal from "sweetalert2";
-import { Link } from "react-router";
+
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+
 
   const { data: parcels = [], refetch } = useQuery({
     queryKey: ["myParcels", user?.email],
@@ -58,6 +59,19 @@ const MyParcels = () => {
   });
 };
 
+const handlePayment = async(parcel)=>{
+      const paymentInfo = {
+        cost: parcel.cost,
+        parcelId: parcel._id,
+        senderEmail: parcel.senderEmail,
+        parcelName: parcel.parcelName,
+      };
+      const res = await axiosSecure.post('/payment-checkout-session',paymentInfo)
+    console.log(res.data.url);
+    window.location.assign(res.data.url)
+  
+}
+
   return (
     <div>
       <h2>All of my parcels : {parcels.length}</h2>
@@ -84,13 +98,10 @@ const MyParcels = () => {
                 <td>
                   {
                     parcel.paymentStatus === 'paid' ? 
-                    <span className="btn btn-primary text-black">Paid</span>
+                    <span className="text-green-600 font-bold bg-green-100 rounded-lg px-2 py-1">Paid</span>
                     
                     :
-                      <Link to={`/dashboard/payment/${parcel._id}`}  className="btn btn-sm btn-primary text-black">
-                        Pay
-                      
-                      </Link>
+                       <button onClick={()=> handlePayment(parcel)} className='btn btn-primary btn-sm text-black'>Pay</button>
                   }
 
                 </td>
