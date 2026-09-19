@@ -1,4 +1,5 @@
-
+import { FaRegCreditCard } from "react-icons/fa";
+import { RiMotorbikeFill } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router";
 
 const DashBoadLayout = () => {
@@ -47,7 +48,8 @@ const DashBoadLayout = () => {
         <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
           {/* Sidebar content here */}
           <ul className="menu w-full grow">
-            {/* List item */}
+
+     {/* Homepage */}
             <li>
               <Link
                 to={"/"}
@@ -71,33 +73,34 @@ const DashBoadLayout = () => {
                 <span className="is-drawer-close:hidden">Homepage</span>
               </Link>
             </li>
-
-<li>
-  <NavLink
-    to={"/dashboard/my-parcels"}
-    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-    data-tip="My Parcels"
-  >
-    {/* Parcel icon */}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      strokeLinejoin="round"
-      strokeLinecap="round"
-      strokeWidth="2"
-      fill="none"
-      stroke="currentColor"
-      className="my-1.5 inline-block size-4"
-    >
-      <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path>
-      <path d="M12 12l8-4.5"></path>
-      <path d="M12 12v9"></path>
-      <path d="M12 12L4 7.5"></path>
-    </svg>
-    <span className="is-drawer-close:hidden">My Parcels</span>
-  </NavLink>
-</li>
-            {/* List item */}
+   
+   {/* My Parcels */}
+            <li>
+              <NavLink
+                to={"/dashboard/my-parcels"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Parcels"
+              >
+                {/* Parcel icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  fill="none"
+                  stroke="currentColor"
+                  className="my-1.5 inline-block size-4"
+                >
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path>
+                  <path d="M12 12l8-4.5"></path>
+                  <path d="M12 12v9"></path>
+                  <path d="M12 12L4 7.5"></path>
+                </svg>
+                <span className="is-drawer-close:hidden">My Parcels</span>
+              </NavLink>
+            </li>
+{/* Settings */}
             <li>
               <button
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -122,6 +125,34 @@ const DashBoadLayout = () => {
                 <span className="is-drawer-close:hidden">Settings</span>
               </button>
             </li>
+
+            {/* Payment History */}
+            <li>
+              <Link  to={'/dashboard/payment-history'}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Payment History"
+              >
+      
+                 <FaRegCreditCard/>
+                <span className="is-drawer-close:hidden">Payment History</span>
+              </Link>
+            </li>
+
+
+            {/* Approaved riders */}
+            <li>
+              <Link  to={'/dashboard/approved-riders'}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Approved Riders"
+              >
+      
+               <RiMotorbikeFill />
+                <span className="is-drawer-close:hidden">Approved Riders</span>
+              </Link>
+            </li>
+
+
+
           </ul>
         </div>
       </div>

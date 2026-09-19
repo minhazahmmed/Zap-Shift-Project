@@ -1,19 +1,41 @@
 import { useNavigate, useLocation } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure"; // 🔴 NEW
 
 const SocialLogin = ({ from: propsFrom }) => {
   const { signInGoogle } = useAuth();
+  const axiosSecure = useAxiosSecure(); // 🔴 NEW
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Props থেকে পাওয়া পাথ অথবা লোকাল লোকেশন স্টেট থেকে পাথ বের করা
+  // Props থেকে পাওয়া পাথ অথবা লোকাল লোকেশন স্টেট থেকে পাথ বের করা
   const redirectPath = propsFrom || location.state?.from?.pathname || "/";
 
   const handleGoogleSignIn = () => {
     signInGoogle()
       .then((result) => {
         console.log(result.user);
-        navigate(redirectPath, { replace: true });
+
+        // 🔴 NEW: Google login সফল হলেই backend-এ user save করার চেষ্টা করা —
+        // backend-এর /users route ইতিমধ্যে email দিয়ে duplicate check করে,
+        // তাই বারবার login করলেও নতুন document তৈরি হবে না
+        const userInfo = {
+          name: result.user.displayName,
+          email: result.user.email,
+          photoURL: result.user.photoURL,
+        };
+
+        axiosSecure
+          .post("/users", userInfo)
+          .then((dbRes) => {
+            console.log("User saved to DB:", dbRes.data);
+          })
+          .catch((error) => {
+            console.error("Failed to save user to DB:", error);
+          })
+          .finally(() => {
+            navigate(redirectPath, { replace: true });
+          });
       })
       .catch((error) => {
         console.log(error);

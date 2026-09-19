@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure"; // 🔴 NEW
 import { Link, useNavigate, useLocation } from "react-router";
 import SocialLogin from "../Social Login/SocialLogin";
 import axios from "axios";
@@ -14,6 +15,7 @@ const Register = () => {
 
   const [authError, setAuthError] = useState("");
   const { registerUser, updateUserProfile } = useAuth();
+  const axiosSecure = useAxiosSecure(); // 🔴 NEW
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -43,7 +45,24 @@ const Register = () => {
 
             updateUserProfile(userProfile)
               .then(() => {
-                navigate(from, { replace: true });
+                // 🔴 NEW: profile update সফল হওয়ার পর backend-এ user save করা
+                const userInfo = {
+                  name: data.name,
+                  email: data.email,
+                  photoURL: res.data.data.url,
+                };
+
+                axiosSecure
+                  .post("/users", userInfo)
+                  .then((dbRes) => {
+                    console.log("User saved to DB:", dbRes.data);
+                  })
+                  .catch((error) => {
+                    console.error("Failed to save user to DB:", error);
+                  })
+                  .finally(() => {
+                    navigate(from, { replace: true });
+                  });
               })
               .catch((error) => {
                 console.log(error);
